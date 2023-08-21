@@ -26,11 +26,14 @@ function deleteChildElements(parent) {
 const gamesContainer = document.getElementById("games-container");
 
 // create a function that adds all data from the games array to the page
-function addGamesToPage(games) {
-    // loop over each item in the data
-    const container = document.getElementById("games-container");
 
-    games.forEach(element => {
+function addGamesToPage(games) {
+    //deleteChildElements(gamesContainer);
+    // loop over each item in the data
+    deleteChildElements(gamesContainer);
+    const container = document.getElementById("games-container");
+    console.log(games);
+    for(const element of games)  {
 
         let cardElement = document.createElement("div");
         
@@ -41,9 +44,13 @@ function addGamesToPage(games) {
         imageElement.classList.add("image");
         imageElement.src = element.img;
         
+        const toFullBacking = element.goal - element.pledged;
+
         const cardHTML = `
         <p>${element.name} </p>
         <p>${element.description}</p>
+        <p>Backers : ${element.backers}</p>
+        <p>Amount to Full Backing: ${toFullBacking > 0? toFullBacking : "Fully Backed!"}</p>
         `;
         
         cardElement.appendChild(imageElement);
@@ -51,7 +58,7 @@ function addGamesToPage(games) {
         
         container.appendChild(cardElement);
 
-    });
+    }
 }
 
 
@@ -88,6 +95,7 @@ const gamesCard = document.getElementById("num-games");
 const numberOfGames = GAMES_JSON.reduce( (acc, gamescard) =>{
     return acc+1;
 }, 0);
+
 gamesCard.innerHTML += numberOfGames.toLocaleString();
 
 /*************************************************************************************
@@ -188,7 +196,6 @@ const sortedGames =  GAMES_JSON.sort( (item1, item2) => {
 
 // use destructuring and the spread operator to grab the first and second games
 const firstTwo = [sortedGames[0], sortedGames[1]];
-console.log(firstTwo);
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 const topName = firstTwo[0].name;
 const topNameContainer = document.createElement("p");
@@ -199,3 +206,24 @@ const secondName =  firstTwo[1].name;
 const secondNameContainer = document.createElement("P");
 secondNameContainer.textContent += secondName;
 secondGameContainer.appendChild(secondNameContainer);
+
+//Search for a game
+//Add button
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("input", (event) => {
+    const { value } = event.target;
+
+    const searchQuery = value.toLowerCase();   
+    if(searchQuery.length > 0){
+        addGamesToPage(GAMES_JSON.filter(game => {
+            console.log(game.name);
+            return game.name.toLowerCase().includes(searchQuery);
+            })
+        );
+    }
+    else{
+        unfundedButtonClickHandler();
+    }
+})
