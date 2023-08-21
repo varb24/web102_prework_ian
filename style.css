@@ -22,7 +22,6 @@ body {
 .stats-container {
     display:flex;
     align-items:column;
-    border:1px solid rgb(212, 55, 55);
     gap: 50px;
     cursor:pointer;
 
@@ -84,4 +83,23 @@ button {
 .image {
     max-width: 100%; 
     height: auto; 
+}
+#search-bar {
+    margin:1%;
+    text-align: center;
+}
+.searchInput{
+    align-items:center;
+}
+#search label {
+    font-family: 'Cabin';
+    border: none;
+    padding: 1%;
+    margin: 1%;
+    border-radius: 7px;
+}
+
+#searchInput {
+    width: 10%; /* Take up the full width of the container */
+
 }
