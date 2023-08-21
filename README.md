@@ -29,7 +29,7 @@ GIF created with LICEcap
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+Had some trouble making the search bar work as I intended it to, had just forgotten to match the case in the input string with the case of the game's name attribute.
 
 ## License
 
